@@ -1,7 +1,7 @@
 import tkinter as tk
 import pyperclip
 from config_parser import GetConfigPaster, ChangeConfigPasterValue
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from tkinter import simpledialog 
 import engine
 
@@ -129,7 +129,7 @@ class AddAccountPage(tk.Frame):
             else:
                 self.password_entry.config(show='*')
 
-        self.toggle_button = ttk.Button(self, text='Toggle', command=toggle_password)
+        self.toggle_button = ttk.Button(self, text='Show Password', command=toggle_password)
         self.toggle_button.pack()
 
 
@@ -566,9 +566,16 @@ class SettingsPage(tk.Frame):
         Create a dialog that asks for the new master password
         Change the saved master password according to the new master password
         '''
-        new_mp = simpledialog.askstring('Change Master Password','Set a new master password:')
-        simpledialog.askstring('Change Master Password', 'Confirm new master password:')
-        ChangeConfigPasterValue("LOGIN","master_password",new_mp)
+
+        new_mp = simpledialog.askstring('Change Master Password', 'Set a new master password:')
+        confirm_mp = simpledialog.askstring('Change Master Password', 'Confirm new master password:')
+        if new_mp == confirm_mp:
+            ChangeConfigPasterValue("LOGIN", "master_password", new_mp)
+            messagebox.showinfo('Success', 'Master password changed successfully!')
+        else:
+            messagebox.showerror('Error', 'Passwords do not match. Please try again.')
+
+
 
 
 def main():
