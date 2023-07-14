@@ -123,6 +123,14 @@ class AddAccountPage(tk.Frame):
 
         self.password_entry = ttk.Entry(self, width=32, show='*')
         self.password_entry.pack()
+        def toggle_password():
+            if self.password_entry.cget('show') == '*':
+                self.password_entry.config(show='')
+            else:
+                self.password_entry.config(show='*')
+
+        self.toggle_button = ttk.Button(self, text='Toggle', command=toggle_password)
+        self.toggle_button.pack()
 
 
         pass_gen_button = ttk.Button(self, text="Generate Password", command = self.GeneratePass)
@@ -477,11 +485,11 @@ class SettingsPage(tk.Frame):
         Update the text showing the password length
         '''
         new_pass_length = simpledialog.askstring('Change Default Password Length','Set a new default password length:')
-        if int(new_pass_length) >=4:
+        if int(new_pass_length) >=12:
             ChangeConfigPasterValue("PASSWORD_PREFERENCE","pass_length",new_pass_length)
             self.pass_length.config(text=GetConfigPaster('PASSWORD_PREFERENCE', 'pass_length'))
         else:
-            tk.messagebox.showerror(title="Password too short", message="A password length of less than 4 is too vulnerable and is not allowed")
+            tk.messagebox.showerror(title="Password too short", message="A password length of less than 12 is too vulnerable and is not allowed")
         
     def PasswordGeneratorWarning(self):
         '''
@@ -559,7 +567,7 @@ class SettingsPage(tk.Frame):
         Change the saved master password according to the new master password
         '''
         new_mp = simpledialog.askstring('Change Master Password','Set a new master password:')
-        simpledialog.askstring('Change Master Password', 'Confirnew master password:')
+        simpledialog.askstring('Change Master Password', 'Confirm new master password:')
         ChangeConfigPasterValue("LOGIN","master_password",new_mp)
 
 
