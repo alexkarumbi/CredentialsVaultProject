@@ -560,20 +560,47 @@ class SettingsPage(tk.Frame):
         else:
             self.special_characters_button.config(text='ON')
             ChangeConfigPasterValue("PASSWORD_PREFERENCE", "special", "True")
-        
+
+
     def MasterPassChangeDialog(self):
         '''
         Create a dialog that asks for the new master password
         Change the saved master password according to the new master password
         '''
 
-        new_mp = simpledialog.askstring('Change Master Password', 'Set a new master password:')
-        confirm_mp = simpledialog.askstring('Change Master Password', 'Confirm new master password:')
-        if new_mp == confirm_mp:
-            ChangeConfigPasterValue("LOGIN", "master_password", new_mp)
-            messagebox.showinfo('Success', 'Master password changed successfully!')
-        else:
-            messagebox.showerror('Error', 'Passwords do not match. Please try again.')
+        def toggle_password(entry_widget):
+            if entry_widget.cget('show') == '*':
+                entry_widget.config(show='')
+            else:
+                entry_widget.config(show='*')
+
+        dialog = tk.Toplevel()
+        dialog.title('Change Master Password')
+
+        tk.Label(dialog, text='Set a new master password:').pack()
+        new_mp_entry = tk.Entry(dialog, show='*')
+        new_mp_entry.pack()
+
+        tk.Label(dialog, text='Confirm new master password:').pack()
+        confirm_mp_entry = tk.Entry(dialog, show='*')
+        confirm_mp_entry.pack()
+
+        toggle_button = tk.Button(dialog, text='Toggle',
+                                  command=lambda: [toggle_password(new_mp_entry), toggle_password(confirm_mp_entry)])
+        toggle_button.pack()
+
+        def submit():
+            new_mp = new_mp_entry.get()
+            confirm_mp = confirm_mp_entry.get()
+            if new_mp == confirm_mp:
+                ChangeConfigPasterValue("LOGIN", "master_password", new_mp)
+                messagebox.showinfo('Success', 'Master password changed successfully!')
+                dialog.destroy()
+            else:
+                messagebox.showerror('Error', 'Passwords do not match. Please try again.')
+
+        submit_button = tk.Button(dialog, text='Submit', command=submit)
+        submit_button.pack()
 
 
 
