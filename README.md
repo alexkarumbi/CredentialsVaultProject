@@ -1,6 +1,6 @@
 
 # Credentials Vault
-_"**Password Control**"_
+_"**Password Manager and Storage **"_
 
 A simple password manager and password generator with an easy-to-use GUI. <br/>
 
