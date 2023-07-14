@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CredentialsVaultProject.iml" filepath="$PROJECT_DIR$/.idea/CredentialsVaultProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PWControl.iml" filepath="$PROJECT_DIR$/.idea/PWControl.iml" />
     </modules>
   </component>
 </project>
